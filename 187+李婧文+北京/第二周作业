@@ -1,1 +1,41 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+#第二周作业 1实现灰度化和二值图 2实现最临近差值
+#--------------------------------------------------
+#实现灰度化函数 RGB转灰度公式:Grey=0.299*R+0.587*G+0.114*B
+img=cv2.imread(path)
+h,w=img.shape[:2]   #获取图片长宽
+img_gray=np.zeros([h,w],img.dtype)   #创建一张和当前照片大小一样的单通道照片
+for i in range(h):
+    for i in range (w):
+        m=img[i,j]             #取出当前high和wide中的BGR坐标
+        img_gray[i,j]=int(m[0]*0.114+m[1]*0.587+m[2]*0.299
+cv2.imshow("image show gray",img_gray)
 
+#实现二值化函数
+img_binary=np.zeros((height,width),dtype=np.uint8)
+ img_new = img_gray.astype(np.float)/255.0
+ for i in range(height):
+     for j in range(width):
+         if (img_new[i,j] < 0.5):
+             img_binary[i, j] = 0
+         else:
+             img_binary[i, j] = 1
+cv2.imshow('binary:',img_binary)
+
+# 图像放大缩小(临近插值）
+def resize(img,high,wide):
+    if config_value == "img_one":
+        height, width, channels = img.shape
+        emptyImage = np.zeros((high, wide, channels), np.uint8)
+        sh = high / height
+        sw = wide / width
+        for i in range(high):
+            for j in range(wide):
+                x = int(i / sh + 0.5)  # int(),转为整型，使用向下取整。
+                y = int(j / sw + 0.5)
+                emptyImage[i, j] = img[x, y]
+    else:
+        emptyImage = cv2.resize(img, (high, wide), interpolation=cv2.INTER_NEAREST)
+    return emptyImage
